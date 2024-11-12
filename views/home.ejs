@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Short Url</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #f1f1f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            max-width: 500px;
+            overflow: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>URL Shortener App</h1>
+        <form method="post" action="/url">
+            <label for="url">Enter your original URL</label>
+            <input type="text" id="url" name="url" placeholder="https://example.com" required>
+            <button type="submit">Generate Short URL</button>
+        </form>
+
+        <% if (locals.id) { %>
+            <p>
+                Generated URL: <a href="http://localhost:5000/url/<%= id %>">http://localhost:5000/url/<%= id %></a>
+            </p>
+            <% } %>
+
+                <% if (locals.urls) { %>
+                    <table>
+                        <thead>
+                            <th>S No.</th>
+                            <th>Short id</th>
+                            <th>Redirect Url</th>
+                            <th>Clicks</th>
+                        </thead>
+                        <tbody>
+                            <% urls.forEach((url, index)=> { %>
+                                <tr>
+                                    <td>
+                                        <%= index +1 %>
+                                    </td>
+                                    <td><a href="http://localhost:5000/url/<%= url.shortID %>">http://localhost:5000/url/
+                                            <%= url.shortID %>
+                                        </a></td>
+                                    <td>
+                                        <%= url.redirectURL%>
+                                    </td>
+                                    <td>
+                                        <%= url.visitHistory.length%>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                    <% } %>
+    </div>
